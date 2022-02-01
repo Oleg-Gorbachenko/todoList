@@ -1,30 +1,30 @@
 import React from "react";
 
-type propsType={
-    ogyrce?: string
-    pomidorki?: string
-    arrForTodolist1: Array<inArray>
+type TodolistType={
+    title: string
+    tasks: Array<ObjectFromArray>
+
 }
 
-type inArray={
+type ObjectFromArray={
     id: number
     isDone: boolean
     title: string
 }
 
-export const TodoList = (props:propsType) => {
+export const TodoList = (props:TodolistType) => {
     return (
         <div>
-            <h3>{props.ogyrce}</h3>
-            <h3>{props.pomidorki}</h3>
+            <h3>{props.title}</h3>
             <div>
                 <input/>
                 <button>+</button>
             </div>
             <ul>
-                {props.arrForTodolist1.map(m=>{
+                {props.tasks.map((m, index)=>{
+                    debugger
                     return (
-                        <li><input type="checkbox" checked={m.isDone}/> <span>{m.title}</span></li>
+                        <li key={index}><input type="checkbox" checked={m.isDone}/> <span>{m.title}</span></li>
                     )
                 })}
                 {/*<li><input type="checkbox" checked={props.arrForTodolist1[0].isDone}/> <span>{props.arrForTodolist1[0].title}</span></li>*/}
