@@ -16,22 +16,26 @@ type PropsType = {
 }
 
 export const TodoList = (props: PropsType) => {
+    //хуки
     let [title, setTitle] = useState('')
-
+    //функции
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
     }
     const onKeyPressButtonHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === ('Enter')){
+        if (event.key === ('Enter')) {
             props.addTask(title)
             setTitle('')
         }
     }
-
     const onClickAddButton = () => {
         props.addTask(title)
         setTitle('')
     }
+    const onClickChangeFilter = (value: FilterValuesType) => {
+        props.changeFilter(value)
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -54,17 +58,11 @@ export const TodoList = (props: PropsType) => {
                 })}
             </ul>
             <div>
-                <button onClick={() => {
-                    props.changeFilter('all')
-                }}>All
+                <button onClick={() => onClickChangeFilter('all')}>All
                 </button>
-                <button onClick={() => {
-                    props.changeFilter('active')
-                }}>Active
+                <button onClick={() => onClickChangeFilter('active')}>Active
                 </button>
-                <button onClick={() => {
-                    props.changeFilter('completed')
-                }}>Completed
+                <button onClick={() => onClickChangeFilter('completed')}>Completed
                 </button>
             </div>
         </div>

@@ -6,6 +6,7 @@ import { v1 } from 'uuid';
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export function App() {
+    //хуки
     let [filter, setFilter] = useState<FilterValuesType>('all')
     let [tasks, setTasks] = useState<Array<TaskType>>([
         {id: v1(), title: 'HTML&CSS', isDone: true},
@@ -14,6 +15,7 @@ export function App() {
         {id: v1(), title: 'Redux', isDone: false},
     ])
 
+    //функции
     const addTask = (title:string) => {
        let newTask = {id: v1(), title: title, isDone: false}
         setTasks([newTask, ...tasks])
@@ -21,11 +23,11 @@ export function App() {
     const removeTask = (id: string) => {
         setTasks(tasks.filter(t => t.id !== id))
     }
-
     const changeFilter = (value: FilterValuesType) => {
         setFilter(value)
     }
 
+    //условие фильтрации
     let filteredTasks = tasks;
     if (filter === 'completed') {
         filteredTasks = tasks.filter(t => t.isDone);
