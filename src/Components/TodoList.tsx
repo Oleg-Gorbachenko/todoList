@@ -42,7 +42,7 @@ export const TodoList = (props: PropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <FullInput addTask={props.addTask}/>
+                <FullInput name={'+'} addTask={props.addTask}/>
             </div>
             <ul>
                 {filteredTasks.map((t) => {
