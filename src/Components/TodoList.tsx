@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {FilterValuesType} from "../../App";
+import React, {useState} from "react";
+import {FilterValuesType} from "../App";
+import {FullInput} from "./FullInput";
 
 export type TaskType = {
     id: string
@@ -16,20 +17,8 @@ type PropsType = {
 export const TodoList = (props: PropsType) => {
     //хуки
     let [filter, setFilter] = useState<FilterValuesType>('all')
-    let [title, setTitle] = useState('')
+
     //функции
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.currentTarget.value)
-    }
-    const onKeyPressButtonHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === ('Enter')) {
-            onClickAddButton()
-        }
-    }
-    const onClickAddButton = () => {
-        props.addTask(title)
-        setTitle('')
-    }
     const onClickChangeFilter = (value: FilterValuesType) => {
         changeFilter(value)
     }
@@ -53,8 +42,7 @@ export const TodoList = (props: PropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onChange={onChangeInputHandler} onKeyPress={onKeyPressButtonHandler}/>
-                <button onClick={onClickAddButton}>+</button>
+                <FullInput addTask={props.addTask}/>
             </div>
             <ul>
                 {filteredTasks.map((t) => {
