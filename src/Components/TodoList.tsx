@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, ChangeEvent} from "react";
 import {FilterValuesType} from "../App";
 import {FullInput} from "./FullInput";
 
@@ -7,14 +7,15 @@ export type TaskType = {
     isDone: boolean
     title: string
 }
-type PropsType = {
+type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (id: string) => void
     addTask: (title: string) => void
+    changeStatus: (checked: boolean, taskId: string) => void
 }
 
-export const TodoList = (props: PropsType) => {
+export const TodoList = (props: TodoListPropsType) => {
     //хуки
     let [filter, setFilter] = useState<FilterValuesType>('all')
 
@@ -27,6 +28,9 @@ export const TodoList = (props: PropsType) => {
     }
     const onClickRemoveTaskHandler = (value: string) => {
         props.removeTask(value)
+    }
+    const changeStatusHandler = (checked: boolean, tId: string) => {
+        props.changeStatus(checked, tId)
     }
 
     //условие фильтрации
@@ -48,9 +52,10 @@ export const TodoList = (props: PropsType) => {
                 {filteredTasks.map((t) => {
                     return (
                         <li key={t.id}>
-                            <button onClick={() => onClickRemoveTaskHandler(t.id)}>x
-                            </button>
-                            <input type="checkbox" checked={t.isDone}/>
+                            <button onClick={() => onClickRemoveTaskHandler(t.id)}>x</button>
+                            <input type="checkbox"
+                                   checked={t.isDone}
+                                   onChange={(event: ChangeEvent<HTMLInputElement>) => changeStatusHandler(event.currentTarget.checked, t.id)}/>
                             <span>{t.title}</span>
                         </li>
                     )

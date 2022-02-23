@@ -11,8 +11,10 @@ export const FullInput = (props: FullInputPropsType) => {
     let [title, setTitle] = useState('')
 
     const callBack = () => {
-        props.addTask(title)
-        setTitle('')
+        if (title !== '') {
+            props.addTask(title.trim())
+            setTitle('')
+        }
     }
     return (
         <div>

@@ -22,6 +22,9 @@ export function App() {
     const removeTask = (id: string) => {
         setTasks(tasks.filter(t => t.id !== id))
     }
+    const changeStatus = (checked: boolean, taskId: string) => {
+        setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: checked} : el))
+    }
 
     return (
         <div className="App">
@@ -29,6 +32,7 @@ export function App() {
                       tasks={tasks}
                       removeTask={removeTask}
                       addTask={addTask}
+                      changeStatus={changeStatus}
             />
         </div>
     );
