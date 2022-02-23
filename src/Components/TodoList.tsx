@@ -1,7 +1,8 @@
-import React, {useState, ChangeEvent} from "react";
+import React, {useState} from "react";
 import {FilterValuesType} from "../App";
 import {FullInput} from "./FullInput";
 import styles from "./Todolist.module.css";
+import {CheckBox} from "./CheckBox";
 
 export type TaskType = {
     id: string
@@ -54,14 +55,13 @@ export const TodoList = (props: TodoListPropsType) => {
                     return (
                         <li key={t.id} className={t.isDone ? styles.isDone : ''}>
                             <button onClick={() => onClickRemoveTaskHandler(t.id)}>x</button>
-                            <input type="checkbox"
-                                   checked={t.isDone}
-                                   onChange={(event: ChangeEvent<HTMLInputElement>) => changeStatusHandler(event.currentTarget.checked, t.id)}/>
+                            <CheckBox isDone={t.isDone}
+                                      callBack={(checked) => changeStatusHandler(checked, t.id)}/>
                             <span>{t.title}</span>
                         </li>
                     )
                 })}
-            </ul> 
+            </ul>
             <div>
                 <button className={filter === 'all' ? styles.activeFilter : ''}
                         onClick={() => onClickChangeFilter('all')}>All
