@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType, TodoList} from "./Components/TodoList";
+import {TodoList} from "./Components/TodoList";
 import {v1} from 'uuid';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export function App() {
     //хуки
-    let [tasks, setTasks] = useState<Array<TaskType>>([
+    let [tasks, setTasks] = useState([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
         {id: v1(), title: 'React', isDone: false},

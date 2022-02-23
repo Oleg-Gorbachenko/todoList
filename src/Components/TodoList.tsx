@@ -4,7 +4,7 @@ import {FullInput} from "./FullInput";
 import styles from "./Todolist.module.css";
 import {CheckBox} from "./CheckBox";
 
-export type TaskType = {
+type TaskType = {
     id: string
     isDone: boolean
     title: string
