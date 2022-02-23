@@ -1,6 +1,7 @@
 import React, {useState, ChangeEvent} from "react";
 import {FilterValuesType} from "../App";
 import {FullInput} from "./FullInput";
+import styles from "./Todolist.module.css";
 
 export type TaskType = {
     id: string
@@ -51,7 +52,7 @@ export const TodoList = (props: TodoListPropsType) => {
             <ul>
                 {filteredTasks.map((t) => {
                     return (
-                        <li key={t.id}>
+                        <li key={t.id} className={t.isDone ? styles.isDone : ''}>
                             <button onClick={() => onClickRemoveTaskHandler(t.id)}>x</button>
                             <input type="checkbox"
                                    checked={t.isDone}
@@ -60,11 +61,17 @@ export const TodoList = (props: TodoListPropsType) => {
                         </li>
                     )
                 })}
-            </ul>
+            </ul> 
             <div>
-                <button onClick={() => onClickChangeFilter('all')}>All</button>
-                <button onClick={() => onClickChangeFilter('active')}>Active</button>
-                <button onClick={() => onClickChangeFilter('completed')}>Completed</button>
+                <button className={filter === 'all' ? styles.activeFilter : ''}
+                        onClick={() => onClickChangeFilter('all')}>All
+                </button>
+                <button className={filter === 'active' ? styles.activeFilter : ''}
+                        onClick={() => onClickChangeFilter('active')}>Active
+                </button>
+                <button className={filter === 'completed' ? styles.activeFilter : ''}
+                        onClick={() => onClickChangeFilter('completed')}>Completed
+                </button>
             </div>
         </div>
     )
