@@ -10,11 +10,9 @@ export const CheckBox = (props: CheckBoxPropsType) => {
         props.callBack(event.currentTarget.checked)
     }
     return (
-        <>
-            <input type="checkbox"
-                   checked={props.isDone}
-                   onChange={callBackHandler}/>
-        </>
+        <input type="checkbox"
+               checked={props.isDone}
+               onChange={callBackHandler}/>
     );
 };
 
