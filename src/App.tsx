@@ -13,7 +13,7 @@ export function App() {
         {id: v1(), title: 'React', isDone: false},
         {id: v1(), title: 'Redux', isDone: false},
     ])
-
+    let [filter, setFilter] = useState<FilterValuesType>('all')
     //функции
     const addTask = (title: string) => {
         let newTask = {id: v1(), title: title, isDone: false}
@@ -25,14 +25,23 @@ export function App() {
     const changeStatus = (checked: boolean, taskId: string) => {
         setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: checked} : el))
     }
-
+    //условие фильтрации
+    let filteredTasks = tasks;
+    if (filter === 'completed') {
+        filteredTasks = tasks.filter(t => t.isDone);
+    }
+    if (filter === 'active') {
+        filteredTasks = tasks.filter(t => !t.isDone);
+    }
     return (
         <div className="App">
             <TodoList title={'What to learn1'}
-                      tasks={tasks}
+                      filteredTasks={filteredTasks}
                       removeTask={removeTask}
                       addTask={addTask}
                       changeStatus={changeStatus}
+                      filter={filter}
+                      setFilter={setFilter}
             />
         </div>
     );

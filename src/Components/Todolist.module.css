@@ -8,8 +8,13 @@
 
 .activeFilter {
     background-color: aquamarine;
+    border-radius: 5px;
 }
 
 .isDone {
     opacity: 0.5;
+}
+
+.button {
+    border-radius: 5px;
 }
