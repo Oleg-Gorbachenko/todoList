@@ -4,8 +4,9 @@ import {Input} from "./Input";
 import styles from "./Todolist.module.css";
 
 type FullInputPropsType = {
-    addTask: (title: string) => void
+    addTask: (title: string,todolistId: string) => void
     name: string
+    id:string
 }
 
 export const FullInput = (props: FullInputPropsType) => {
@@ -14,7 +15,7 @@ export const FullInput = (props: FullInputPropsType) => {
 
     const callBack = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim())
+            props.addTask(title.trim(), props.id)
             setTitle('')
         } else {
             setError("title is required")
