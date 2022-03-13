@@ -21,6 +21,7 @@ type TodoListPropsType = {
     todolistId: string
     removeTodolist: (todolistId: string) => void
     updateTask: (todolistId: string, id: string, title: string) => void
+    updateTodolist: (todolistId: string, title: string) => void
 }
 
 export const Todolist = (props: TodoListPropsType) => {
@@ -43,9 +44,13 @@ export const Todolist = (props: TodoListPropsType) => {
     const updateTaskHandler = (tId: string, title: string) => {
         props.updateTask(props.todolistId,tId,title)
     }
+    const updateTodolistHandler=(title:string)=>{
+        props.updateTodolist(props.todolistId,title)
+    }
     return (
         <div>
-            <h3>{props.title}
+            <h3>
+                <EditableSpan oldTitle={props.title} updateTask={updateTodolistHandler}/>
                 <button onClick={removeTodolist}>x</button>
             </h3>
             <AddItemForm callBack={addTaskHandler}/>
@@ -56,7 +61,10 @@ export const Todolist = (props: TodoListPropsType) => {
                             <button onClick={() => onClickRemoveTaskHandler(t.id, props.todolistId)}>x</button>
                             <CheckBox isDone={t.isDone}
                                       callBack={(checked) => changeStatusHandler(checked, t.id, props.todolistId)}/>
-                            <EditableSpan oldTitle={t.title} updateTask={(title:string)=>updateTaskHandler(t.id,title)}/>
+                            <EditableSpan
+                                oldTitle={t.title}
+                                updateTask={(title:string)=>updateTaskHandler(t.id,title)}
+                            />
                         </li>
                     )
                 })}
