@@ -3,6 +3,7 @@ import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import styles from "./Todolist.module.css";
 import {CheckBox} from "./CheckBox";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -19,9 +20,10 @@ type TodoListPropsType = {
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     todolistId: string
     removeTodolist: (todolistId: string) => void
+    updateTask: (todolistId: string, id: string, title: string) => void
 }
 
-export const TodoList = (props: TodoListPropsType) => {
+export const Todolist = (props: TodoListPropsType) => {
     //функции
     const onClickChangeFilter = (value: FilterValuesType, todolistId: string) => {
         props.changeFilter(value, todolistId)
@@ -38,7 +40,9 @@ export const TodoList = (props: TodoListPropsType) => {
     const addTaskHandler = (title: string) => {
         props.addTask(title, props.todolistId)
     }
-
+    const updateTaskHandler = (tId: string, title: string) => {
+        props.updateTask(props.todolistId,tId,title)
+    }
     return (
         <div>
             <h3>{props.title}
@@ -52,7 +56,7 @@ export const TodoList = (props: TodoListPropsType) => {
                             <button onClick={() => onClickRemoveTaskHandler(t.id, props.todolistId)}>x</button>
                             <CheckBox isDone={t.isDone}
                                       callBack={(checked) => changeStatusHandler(checked, t.id, props.todolistId)}/>
-                            <span>{t.title}</span>
+                            <EditableSpan oldTitle={t.title} updateTask={(title:string)=>updateTaskHandler(t.id,title)}/>
                         </li>
                     )
                 })}
