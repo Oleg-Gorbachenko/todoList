@@ -1,6 +1,6 @@
 import React from "react";
 import {FilterValuesType} from "../App";
-import {FullInput} from "./FullInput";
+import {AddItemForm} from "./AddItemForm";
 import styles from "./Todolist.module.css";
 import {CheckBox} from "./CheckBox";
 
@@ -17,8 +17,8 @@ type TodoListPropsType = {
     changeStatus: (checked: boolean, taskId: string, todolistId: string) => void
     filter: FilterValuesType
     changeFilter: (value: FilterValuesType, todolistId: string) => void
-    id: string
-    removeTodolist: (todolistId:string) => void
+    todolistId: string
+    removeTodolist: (todolistId: string) => void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -33,7 +33,10 @@ export const TodoList = (props: TodoListPropsType) => {
         props.changeStatus(checked, tId, todolistId)
     }
     const removeTodolist = () => {
-        props.removeTodolist(props.id)
+        props.removeTodolist(props.todolistId)
+    }
+    const addTaskHandler = (title: string) => {
+        props.addTask(title, props.todolistId)
     }
 
     return (
@@ -41,16 +44,14 @@ export const TodoList = (props: TodoListPropsType) => {
             <h3>{props.title}
                 <button onClick={removeTodolist}>x</button>
             </h3>
-            <div>
-                <FullInput name={'+'} addTask={props.addTask} id={props.id}/>
-            </div>
+            <AddItemForm callBack={addTaskHandler}/>
             <ul>
                 {props.filteredTasks.map((t) => {
                     return (
                         <li key={t.id} className={t.isDone ? styles.isDone : ''}>
-                            <button onClick={() => onClickRemoveTaskHandler(t.id, props.id)}>x</button>
+                            <button onClick={() => onClickRemoveTaskHandler(t.id, props.todolistId)}>x</button>
                             <CheckBox isDone={t.isDone}
-                                      callBack={(checked) => changeStatusHandler(checked, t.id, props.id)}/>
+                                      callBack={(checked) => changeStatusHandler(checked, t.id, props.todolistId)}/>
                             <span>{t.title}</span>
                         </li>
                     )
@@ -58,13 +59,13 @@ export const TodoList = (props: TodoListPropsType) => {
             </ul>
             <div>
                 <button className={props.filter === 'all' ? styles.activeFilter : styles.button}
-                        onClick={() => onClickChangeFilter('all', props.id)}>All
+                        onClick={() => onClickChangeFilter('all', props.todolistId)}>All
                 </button>
                 <button className={props.filter === 'active' ? styles.activeFilter : styles.button}
-                        onClick={() => onClickChangeFilter('active', props.id)}>Active
+                        onClick={() => onClickChangeFilter('active', props.todolistId)}>Active
                 </button>
                 <button className={props.filter === 'completed' ? styles.activeFilter : styles.button}
-                        onClick={() => onClickChangeFilter('completed', props.id)}>Completed
+                        onClick={() => onClickChangeFilter('completed', props.todolistId)}>Completed
                 </button>
             </div>
         </div>

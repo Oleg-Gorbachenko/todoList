@@ -3,19 +3,17 @@ import {Button} from "./Button";
 import {Input} from "./Input";
 import styles from "./Todolist.module.css";
 
-type FullInputPropsType = {
-    addTask: (title: string,todolistId: string) => void
-    name: string
-    id:string
+type PropsType = {
+    callBack: (title: string) => void
 }
 
-export const FullInput = (props: FullInputPropsType) => {
+export const AddItemForm = (props: PropsType) => {
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
     const callBack = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim(), props.id)
+            props.callBack(title.trim())
             setTitle('')
         } else {
             setError("title is required")
@@ -28,8 +26,7 @@ export const FullInput = (props: FullInputPropsType) => {
                    title={title}
                    callBack={callBack}
                    setError={setError}/>
-            <Button name={props.name}
-                    callBack={callBack}/>
+            <Button callBack={callBack}/>
             {error && <div className={styles.errorMessage}>title is required</div>}
 
         </div>
