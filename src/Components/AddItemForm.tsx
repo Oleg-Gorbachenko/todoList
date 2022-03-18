@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import {Button} from "./Button";
-import {Input} from "./Input";
-import styles from "./Todolist.module.css";
+import {ButtonComponent} from "./ButtonComponent";
+import {InputComponent} from "./InputComponent";
 
 type PropsType = {
     callBack: (title: string) => void
@@ -21,15 +20,15 @@ export const AddItemForm = (props: PropsType) => {
     }
     return (
         <div>
-            <Input error={error}
-                   setTitle={setTitle}
-                   title={title}
-                   callBack={callBack}
-                   setError={setError}/>
-            <Button callBack={callBack}/>
-            {error && <div className={styles.errorMessage}>title is required</div>}
+            <InputComponent error={error}
+                            setTitle={setTitle}
+                            title={title}
+                            callBack={callBack}
+                            setError={setError}/>
+            <ButtonComponent callBack={callBack}/>
+
+
 
         </div>
-
     )
 }

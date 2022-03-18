@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styles from "./Todolist.module.css";
+import {TextField} from "@material-ui/core";
 
 type InputPropsType = {
     callBack: () => void
@@ -9,7 +10,7 @@ type InputPropsType = {
     setError: (arg0: string | null) => void
 }
 
-export const Input = (props: InputPropsType) => {
+export const InputComponent = (props: InputPropsType) => {
 
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +23,15 @@ export const Input = (props: InputPropsType) => {
         }
     }
     return (
-        <input className={props.error ? styles.error : ''}
-               value={props.title}
-               onChange={onChangeInputHandler}
-               onKeyPress={onKeyPressButtonHandler}/>
+        <TextField className={props.error ? styles.error : ''}
+                   value={props.title}
+                   onChange={onChangeInputHandler}
+                   onKeyPress={onKeyPressButtonHandler}
+                   id="outlined-basic"
+                   label={props.error}
+                   variant="outlined"
+                   size="small"
+                   error={!!props.error}
+        />
     )
 }
