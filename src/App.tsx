@@ -91,22 +91,21 @@ export function App() {
                         if (tl.filter === 'active') {
                             filteredTasks = filteredTasks.filter(t => !t.isDone);
                         }
-                        return <Grid item>
-
-                            <Paper style={{padding: '10px'}} elevation={6}><Todolist
-                                key={tl.id}
-                                todolistId={tl.id}
-                                title={tl.title}
-                                filteredTasks={filteredTasks}
-                                removeTask={removeTask}
-                                addTask={addTask}
-                                changeStatus={changeStatus}
-                                filter={tl.filter}
-                                changeFilter={changeFilter}
-                                removeTodolist={removeTodolist}
-                                updateTask={updateTask}
-                                updateTodolist={updateTodolist}
-                            /></Paper>
+                        return <Grid item key={tl.id}>
+                            <Paper style={{padding: '10px'}} elevation={6}>
+                                <Todolist
+                                    todolistId={tl.id}
+                                    title={tl.title}
+                                    filteredTasks={filteredTasks}
+                                    removeTask={removeTask}
+                                    addTask={addTask}
+                                    changeStatus={changeStatus}
+                                    filter={tl.filter}
+                                    changeFilter={changeFilter}
+                                    removeTodolist={removeTodolist}
+                                    updateTask={updateTask}
+                                    updateTodolist={updateTodolist}
+                                /></Paper>
                         </Grid>
                     })}
                 </Grid>
