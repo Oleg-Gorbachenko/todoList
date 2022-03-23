@@ -37,21 +37,21 @@ export function App() {
     const todoListId2 = v1()
     //хуки
     const [todoLists, todoListsDispatch] = useReducer(todolistReducers, [
-        {id: todoListId1, type: 'What to learn', filter: 'all'},
-        {id: todoListId2, type: 'What to buy', filter: 'all'}
+        {id: todoListId1, title: 'What to learn', filter: 'all'},
+        {id: todoListId2, title: 'What to buy', filter: 'all'}
     ])
     const [tasks, tasksDispatch] = useReducer(tasksReducers, {
         [todoListId1]: [
-            {id: v1(), type: 'HTML&CSS', isDone: true},
-            {id: v1(), type: 'JS', isDone: true},
-            {id: v1(), type: 'React', isDone: false},
-            {id: v1(), type: 'Redux', isDone: false},
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'React', isDone: false},
+            {id: v1(), title: 'Redux', isDone: false},
         ],
         [todoListId2]: [
-            {id: v1(), type: 'Milk', isDone: true},
-            {id: v1(), type: 'Bread', isDone: true},
-            {id: v1(), type: 'Apples', isDone: false},
-            {id: v1(), type: 'Chocolate', isDone: false},
+            {id: v1(), title: 'Milk', isDone: true},
+            {id: v1(), title: 'Bread', isDone: true},
+            {id: v1(), title: 'Apples', isDone: false},
+            {id: v1(), title: 'Chocolate', isDone: false},
         ]
     })
     //функции

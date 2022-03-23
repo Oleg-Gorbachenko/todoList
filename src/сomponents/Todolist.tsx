@@ -52,7 +52,7 @@ export const Todolist = (props: TodoListPropsType) => {
     return (
         <div>
             <h3>
-                <EditableSpan oldTitle={props.type} updateTask={updateTodolistHandler}/>
+                <EditableSpan oldTitle={props.title} updateTask={updateTodolistHandler}/>
                 <IconButton onClick={removeTodolist}  aria-label="delete" size="small">
                     <Delete fontSize="inherit" />
                 </IconButton>
@@ -65,7 +65,7 @@ export const Todolist = (props: TodoListPropsType) => {
                             <CheckBox isDone={t.isDone}
                                       callBack={(checked) => changeStatusHandler(checked, t.id, props.todolistId)}/>
                             <EditableSpan
-                                oldTitle={t.type}
+                                oldTitle={t.title}
                                 updateTask={(title:string)=>updateTaskHandler(t.id,title)}
                             />
                             <IconButton onClick={() => onClickRemoveTaskHandler(t.id, props.todolistId)}  aria-label="delete" size="small">

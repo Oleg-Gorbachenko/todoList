@@ -17,7 +17,7 @@ export const tasksReducers = (state: TasksStateType, action: tasksReducersType):
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.id ? {
                     ...t,
-                    type: action.payload.updateTitle
+                    title: action.payload.updateTitle
                 } : t)
             }
         }

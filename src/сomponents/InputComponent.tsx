@@ -24,7 +24,7 @@ export const InputComponent = (props: InputPropsType) => {
     }
     return (
         <TextField className={props.error ? styles.error : ''}
-                   value={props.type}
+                   value={props.title}
                    onChange={onChangeInputHandler}
                    onKeyPress={onKeyPressButtonHandler}
                    id="outlined-basic"
