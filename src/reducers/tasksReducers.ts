@@ -34,8 +34,8 @@ export const tasksReducers = (state: TasksStateType, action: tasksReducersType):
             return {...state, [action.payload.newTodolistID]: []}
         }
         case 'RETURN-TASKS-ARRAY': {
-            return {...state}
-        } //??
+            return {...state} //??
+        }
         default:
             return state
     }
