@@ -1,13 +1,14 @@
-import React, {useCallback} from 'react';
+import React from "react";
 import './App.css';
 import {TaskType, Todolist} from "./сomponents/Todolist";
 import {AddItemForm} from "./сomponents/AddItemForm";
 import ButtonAppBar from "./сomponents/ButtonAppBar";
-import {Container, Grid, Paper} from "@material-ui/core";
+import {Container, Grid, Paper} from "@mui/material";
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {addTodolistAC, changeFilterAC, removeTodolistAC, updateTodolistAC} from "./reducers/todolist-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {useCallback} from "react";
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistType = {

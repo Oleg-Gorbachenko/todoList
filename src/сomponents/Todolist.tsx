@@ -2,8 +2,8 @@ import React, {memo, useCallback} from "react";
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {Button, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 import {Task} from "./Task";
 
 export type TaskType = {

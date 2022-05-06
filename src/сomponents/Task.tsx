@@ -3,8 +3,8 @@ import {TaskType} from "./Todolist";
 import styles from "./Todolist.module.css";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, removeTaskAC, updateTaskAC} from "../reducers/tasks-reducer";
 
