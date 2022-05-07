@@ -8,9 +8,9 @@ import {createTaskTC} from "./reducers/tasks-reducer";
 import {
     changeFilterAC,
     createTodolistThunkTC,
+    deleteTodolistThunkTC,
     fetchTodosThunkTC,
     FilterValuesType,
-    removeTodolistAC,
     TodolistDomainType,
     updateTodolistAC
 } from "./reducers/todolist-reducer";
@@ -40,7 +40,7 @@ export function App() {
         dispatch(changeFilterAC(value, todolistId))
     }, [dispatch])
     const removeTodolist = useCallback((todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId))
+        dispatch(deleteTodolistThunkTC(todolistId))
     }, [dispatch])
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistThunkTC(title))
