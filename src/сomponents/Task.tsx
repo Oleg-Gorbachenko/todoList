@@ -1,5 +1,4 @@
 import React, {memo, useCallback} from 'react';
-import {TaskType} from "./Todolist";
 import styles from "./Todolist.module.css";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
@@ -7,6 +6,7 @@ import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, removeTaskAC, updateTaskAC} from "../reducers/tasks-reducer";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 
 export type TaskPropsType = {
@@ -21,8 +21,8 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
         dispatch(removeTaskAC(taskId, todolistId))
     }, [dispatch, todolistId])
 
-    const changeTaskStatus = useCallback((checked: boolean, taskId: string) => {
-        dispatch(changeTaskStatusAC(checked, taskId, todolistId))
+    const changeTaskStatus = useCallback((status: TaskStatuses, taskId: string) => {
+        dispatch(changeTaskStatusAC(status, taskId, todolistId))
     }, [dispatch, todolistId])
 
     const updateTaskTitle = useCallback((taskId: string, title: string) => {
@@ -30,9 +30,9 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
     }, [dispatch, todolistId])
 
     return (
-        <li className={task.isDone ? styles.isDone : ''}>
-            <CheckBox isDone={task.isDone}
-                      callBack={(checked) => changeTaskStatus(checked, task.id)}
+        <li className={task.status === TaskStatuses.Completed ? styles.isDone : ''}>
+            <CheckBox isDone={task.status === TaskStatuses.Completed}
+                      callBack={(status) => changeTaskStatus(status, task.id)}
             />
             <EditableSpan
                 oldTitle={task.title}

@@ -1,13 +1,16 @@
 import React, {ChangeEvent} from 'react';
+import {TaskStatuses} from "../api/todolist-api";
 
 type CheckBoxPropsType = {
     isDone: boolean
-    callBack: (checked: boolean) => void
+    callBack: (status: TaskStatuses) => void
 }
 
 export const CheckBox = (props: CheckBoxPropsType) => {
     const callBackHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        props.callBack(event.currentTarget.checked)
+        const newIsDoneValue = event.currentTarget.checked
+
+        props.callBack(newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New)
     }
 
     return (
