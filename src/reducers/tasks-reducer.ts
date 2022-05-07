@@ -22,7 +22,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: tasks
         case 'REMOVE-TASK': {
             return {
                 ...state,
-                [action.payload.todoListId]: state[action.payload.todoListId].filter(t => t.id !== action.payload.taskId)
+                [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)
             }
         }
         case 'UPDATE-TASK' : {
@@ -66,12 +66,10 @@ export const addTaskAC = (newTask: TaskType) => {
 
 export const removeTaskAC = (todolistId: string, taskId: string) => {
     return {
-        type: 'REMOVE-TASK',
-        payload: {taskId, todoListId: todolistId}
-    } as const
+        type: 'REMOVE-TASK', taskId, todolistId} as const
 }
 
-export const updateTaskAC = (todolistId: string, id: string, model: UpdateTaskModelType) => {
+export const updateTaskAC = (todolistId: string, id: string, model: UpdateDomainTaskModelType) => {
     return {
         type: 'UPDATE-TASK', todolistId, id, model
     } as const
@@ -141,7 +139,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             todolistsAPI.updateTask(todolistId, taskId, model)
                 .then((res) => {
                     if (res.data.resultCode === 0) {
-                        dispatch(updateTaskAC(todolistId, taskId, model))
+                        dispatch(updateTaskAC(todolistId, taskId, domainModel))
                     }
                 })
         }
