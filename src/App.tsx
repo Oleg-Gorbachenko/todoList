@@ -6,8 +6,8 @@ import ButtonAppBar from "./сomponents/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 import {createTaskTC} from "./reducers/tasks-reducer";
 import {
-    addTodolistAC,
     changeFilterAC,
+    createTodolistThunkTC,
     fetchTodosThunkTC,
     FilterValuesType,
     removeTodolistAC,
@@ -43,7 +43,7 @@ export function App() {
         dispatch(removeTodolistAC(todolistId))
     }, [dispatch])
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title))
+        dispatch(createTodolistThunkTC(title))
     }, [dispatch])
     const updateTodolist = useCallback((todolistId: string, title: string) => {
         dispatch(updateTodolistAC(todolistId, title))
