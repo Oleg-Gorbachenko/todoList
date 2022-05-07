@@ -4,19 +4,19 @@ import {Todolist} from "./сomponents/Todolist";
 import {AddItemForm} from "./сomponents/AddItemForm";
 import ButtonAppBar from "./сomponents/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
-import {addTaskAC} from "./reducers/tasks-reducer";
+import {createTaskTC} from "./reducers/tasks-reducer";
 import {
     addTodolistAC,
     changeFilterAC,
+    fetchTodosThunkTC,
     FilterValuesType,
     removeTodolistAC,
-    setTodosAC,
     TodolistDomainType,
     updateTodolistAC
 } from "./reducers/todolist-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TaskType, todolistsAPI} from "./api/todolist-api";
+import {TaskType} from "./api/todolist-api";
 
 export type TasksStateType = {
     [todolistId: string]: Array<TaskType>
@@ -24,12 +24,8 @@ export type TasksStateType = {
 
 export function App() {
     //хуки
-
     useEffect(() => {
-        todolistsAPI.getTodolists()
-            .then((res) => {
-                dispatch(setTodosAC(res.data))
-            })
+        dispatch(fetchTodosThunkTC())
     }, [])
 
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
@@ -38,7 +34,7 @@ export function App() {
 
     //функции
     const addTask = useCallback((title: string, todolistId: string) => {
-        dispatch(addTaskAC(title, todolistId))
+        dispatch(createTaskTC(todolistId, title))
     }, [dispatch])
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         dispatch(changeFilterAC(value, todolistId))

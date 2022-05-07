@@ -5,9 +5,8 @@ import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, removeTaskAC, updateTaskAC} from "../reducers/tasks-reducer";
+import {changeTaskStatusTC, deleteTaskTC, updateTaskAC} from "../reducers/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
-
 
 export type TaskPropsType = {
     task: TaskType
@@ -17,12 +16,12 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
 
     const dispatch = useDispatch()
 
-    const onClickRemoveTask = useCallback((taskId: string) => {
-        dispatch(removeTaskAC(taskId, todolistId))
+    const removeTask = useCallback((taskId: string) => {
+        dispatch(deleteTaskTC(todolistId, taskId))
     }, [dispatch, todolistId])
 
     const changeTaskStatus = useCallback((status: TaskStatuses, taskId: string) => {
-        dispatch(changeTaskStatusAC(status, taskId, todolistId))
+        dispatch(changeTaskStatusTC(todolistId, taskId, status))
     }, [dispatch, todolistId])
 
     const updateTaskTitle = useCallback((taskId: string, title: string) => {
@@ -38,7 +37,7 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
                 oldTitle={task.title}
                 updateTask={(title: string) => updateTaskTitle(task.id, title)}
             />
-            <IconButton onClick={() => onClickRemoveTask(task.id)}
+            <IconButton onClick={() => removeTask(task.id)}
                         aria-label="delete" size="small">
                 <Delete fontSize="inherit"/>
             </IconButton>
