@@ -5,7 +5,7 @@ import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusTC, deleteTaskTC, updateTaskAC} from "../reducers/tasks-reducer";
+import {deleteTaskTC, updateTaskTC} from "../reducers/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type TaskPropsType = {
@@ -21,11 +21,11 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
     }, [dispatch, todolistId])
 
     const changeTaskStatus = useCallback((status: TaskStatuses, taskId: string) => {
-        dispatch(changeTaskStatusTC(todolistId, taskId, status))
+        dispatch(updateTaskTC(todolistId, taskId, {status}))
     }, [dispatch, todolistId])
 
     const updateTaskTitle = useCallback((taskId: string, title: string) => {
-        dispatch(updateTaskAC(todolistId, taskId, title))
+        dispatch(updateTaskTC(todolistId, taskId, {title}))
     }, [dispatch, todolistId])
 
     return (
