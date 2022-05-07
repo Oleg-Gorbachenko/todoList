@@ -12,7 +12,7 @@ import {
     fetchTodosThunkTC,
     FilterValuesType,
     TodolistDomainType,
-    updateTodolistAC
+    updateTodolistThunkTC
 } from "./reducers/todolist-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
@@ -46,7 +46,7 @@ export function App() {
         dispatch(createTodolistThunkTC(title))
     }, [dispatch])
     const updateTodolist = useCallback((todolistId: string, title: string) => {
-        dispatch(updateTodolistAC(todolistId, title))
+        dispatch(updateTodolistThunkTC(todolistId, title))
     }, [dispatch])
 
     return (

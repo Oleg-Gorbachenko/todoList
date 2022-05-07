@@ -23,7 +23,7 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
             return state.filter(tl => tl.id !== action.todolistId)
         }
         case 'UPDATE-TODOLIST': {
-            return state.map(tl => tl.id === action.payload.todoListId ? {...tl, title: action.payload.title} : tl)
+            return state.map(tl => tl.id === action.todolistId ? {...tl, title: action.title} : tl)
         }
         case 'CHANGE-FILTER' : {
             return state.map(tl => tl.id === action.payload.todoListId ? {...tl, filter: action.payload.value} : tl)
@@ -62,7 +62,8 @@ export const removeTodolistAC = (todolistId: string) => {
 export const updateTodolistAC = (todolistId: string, title: string) => {
     return {
         type: 'UPDATE-TODOLIST',
-        payload: {todoListId: todolistId, title: title}
+        todolistId,
+        title
     } as const
 }
 export const changeFilterAC = (value: FilterValuesType, todolistId: string) => {
@@ -103,6 +104,17 @@ export const deleteTodolistThunkTC = (todolistId: string) => {
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(removeTodolistAC(todolistId))
+                }
+            })
+    }
+}
+
+export const updateTodolistThunkTC = (todolistId: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.updateTodolist(todolistId, title)
+            .then((res) => {
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTodolistAC(todolistId, title))
                 }
             })
     }
