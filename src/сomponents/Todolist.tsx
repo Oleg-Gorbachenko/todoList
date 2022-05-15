@@ -8,6 +8,7 @@ import {TaskStatuses, TaskType} from "../api/todolist-api";
 import {FilterValuesType} from "../reducers/todolist-reducer";
 import {fetchTasksTC} from "../reducers/tasks-reducer";
 import {useDispatch} from "react-redux";
+import {RequestStatusType} from "../reducers/app-reducer";
 
 type TodoListPropsType = {
     title: string
@@ -18,6 +19,7 @@ type TodoListPropsType = {
     todolistId: string
     removeTodolist: (todolistId: string) => void
     updateTodolist: (todolistId: string, title: string) => void
+    entityStatus: RequestStatusType
 }
 
 export const Todolist = memo(({
@@ -29,11 +31,13 @@ export const Todolist = memo(({
                                   todolistId,
                                   removeTodolist,
                                   updateTodolist,
+                                  entityStatus,
                               }: TodoListPropsType) => {
 
     useEffect(() => {
         dispatch(fetchTasksTC(todolistId))
     }, [])
+
     const dispatch = useDispatch()
     //функции
     const onClickChangeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
@@ -65,11 +69,12 @@ export const Todolist = memo(({
         <div>
             <h3>
                 <EditableSpan oldTitle={title} updateTask={updateTodolistHandler}/>
-                <IconButton onClick={removeTodolistHandler} aria-label="delete" size="small">
+                <IconButton onClick={removeTodolistHandler} aria-label="delete" size="small"
+                            disabled={entityStatus === 'loading'}>
                     <Delete fontSize="inherit"/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTaskHandler}/>
+            <AddItemForm addItem={addTaskHandler} disabled={entityStatus === 'loading'}/>
             <ul>
                 {
                     tasksForTodolist.map(t => {

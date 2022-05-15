@@ -3,20 +3,22 @@ import './App.css';
 import {Todolist} from "./сomponents/Todolist";
 import {AddItemForm} from "./сomponents/AddItemForm";
 import ButtonAppBar from "./сomponents/ButtonAppBar";
-import {Container, Grid, Paper} from "@mui/material";
+import {Container, Grid, LinearProgress, Paper} from "@mui/material";
 import {createTaskTC} from "./reducers/tasks-reducer";
 import {
     changeFilterAC,
     createTodolistThunkTC,
     deleteTodolistThunkTC,
-    fetchTodosThunkTC,
+    fetchTodolistsTC,
     FilterValuesType,
     TodolistDomainType,
     updateTodolistThunkTC
 } from "./reducers/todolist-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "./state/store";
 import {TaskType} from "./api/todolist-api";
+import {RequestStatusType} from "./reducers/app-reducer";
+import {ErrorSnackbar} from "./сomponents/ErrorSnackbar";
 
 export type TasksStateType = {
     [todolistId: string]: Array<TaskType>
@@ -25,11 +27,13 @@ export type TasksStateType = {
 export function App() {
     //хуки
     useEffect(() => {
-        dispatch(fetchTodosThunkTC())
+        dispatch(fetchTodolistsTC())
     }, [])
 
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
+    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
+    const todoLists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
+    // const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
     const dispatch = useDispatch()
 
     //функции
@@ -52,6 +56,7 @@ export function App() {
     return (
         <div>
             <ButtonAppBar/>
+            {status === 'loading' && <LinearProgress/>}
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm addItem={addTodolist}/>
@@ -61,6 +66,7 @@ export function App() {
                         return <Grid item key={tl.id}>
                             <Paper style={{padding: '10px'}} elevation={6}>
                                 <Todolist
+                                    entityStatus={tl.entityStatus}
                                     todolistId={tl.id}
                                     title={tl.title}
                                     tasks={tasks[tl.id]}
@@ -74,6 +80,7 @@ export function App() {
                     })}
                 </Grid>
             </Container>
+            <ErrorSnackbar/>
         </div>
     );
 }

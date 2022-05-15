@@ -4,6 +4,7 @@ import styles from "./Todolist.module.css";
 
 type PropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 export const AddItemForm = memo((props: PropsType) => {
@@ -40,11 +41,13 @@ export const AddItemForm = memo((props: PropsType) => {
                        variant="outlined"
                        size="small"
                        error={!!error}
+                       disabled={props.disabled}
             />
             <Button onClick={addItem}
                     variant="contained"
                     size="small"
                     sx={{maxWidth: '40px', maxHeight: '40px', minWidth: '40px', minHeight: '40px'}}
+                    disabled={props.disabled}
             >+</Button>
         </div>
     )
