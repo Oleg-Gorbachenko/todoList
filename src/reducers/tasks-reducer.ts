@@ -84,7 +84,7 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => {
     return {type: 'FETCH-TASKS', tasks, todolistId} as const
 }
 
-enum ResultCodeStatuses {
+export enum ResultCodeStatuses {
     success = 0,
     error = 1,
     captcha = 10,

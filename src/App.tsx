@@ -1,86 +1,49 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useEffect} from "react";
 import './App.css';
-import {Todolist} from "./сomponents/Todolist";
-import {AddItemForm} from "./сomponents/AddItemForm";
 import ButtonAppBar from "./сomponents/ButtonAppBar";
-import {Container, Grid, LinearProgress, Paper} from "@mui/material";
-import {createTaskTC} from "./reducers/tasks-reducer";
-import {
-    changeFilterAC,
-    createTodolistThunkTC,
-    deleteTodolistThunkTC,
-    fetchTodolistsTC,
-    FilterValuesType,
-    TodolistDomainType,
-    updateTodolistThunkTC
-} from "./reducers/todolist-reducer";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "./state/store";
+import {CircularProgress, Container, LinearProgress} from "@mui/material";
 import {TaskType} from "./api/todolist-api";
-import {RequestStatusType} from "./reducers/app-reducer";
 import {ErrorSnackbar} from "./сomponents/ErrorSnackbar";
+import {Login} from "./features/Login/Login";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {TodolistsList} from "./features/TodolistsList/TodolistsList";
+import {useAppSelector} from "./state/store";
+import {initializeAppTC, RequestStatusType} from "./reducers/app-reducer";
+import {useDispatch} from "react-redux";
 
 export type TasksStateType = {
     [todolistId: string]: Array<TaskType>
 }
 
 export function App() {
-    //хуки
+    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
+    const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
+
+    const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchTodolistsTC())
+        dispatch(initializeAppTC())
     }, [])
 
-    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
-    const todoLists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
-    // const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
-    const dispatch = useDispatch()
-
-    //функции
-    const addTask = useCallback((title: string, todolistId: string) => {
-        dispatch(createTaskTC(todolistId, title))
-    }, [dispatch])
-    const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
-        dispatch(changeFilterAC(value, todolistId))
-    }, [dispatch])
-    const removeTodolist = useCallback((todolistId: string) => {
-        dispatch(deleteTodolistThunkTC(todolistId))
-    }, [dispatch])
-    const addTodolist = useCallback((title: string) => {
-        dispatch(createTodolistThunkTC(title))
-    }, [dispatch])
-    const updateTodolist = useCallback((todolistId: string, title: string) => {
-        dispatch(updateTodolistThunkTC(todolistId, title))
-    }, [dispatch])
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div>
             <ButtonAppBar/>
             {status === 'loading' && <LinearProgress/>}
             <Container fixed>
-                <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist}/>
-                </Grid>
-                <Grid container spacing={3}>
-                    {todoLists.map((tl) => {
-                        return <Grid item key={tl.id}>
-                            <Paper style={{padding: '10px'}} elevation={6}>
-                                <Todolist
-                                    entityStatus={tl.entityStatus}
-                                    todolistId={tl.id}
-                                    title={tl.title}
-                                    tasks={tasks[tl.id]}
-                                    addTask={addTask}
-                                    filter={tl.filter}
-                                    changeFilter={changeFilter}
-                                    removeTodolist={removeTodolist}
-                                    updateTodolist={updateTodolist}
-                                /></Paper>
-                        </Grid>
-                    })}
-                </Grid>
+                <Routes>
+                    <Route path="/" element={<TodolistsList/>}/>
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="404" element={<h1 style={{textAlign: 'center'}}>404: PAGE NOT FOUND</h1>}/>
+                    <Route path="*" element={<Navigate to="404"/>}/>
+                </Routes>
             </Container>
             <ErrorSnackbar/>
         </div>
-    );
+    )
 }
