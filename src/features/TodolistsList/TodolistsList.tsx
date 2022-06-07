@@ -32,12 +32,11 @@ export const TodolistsList = () => {
         }
     }, [isLoggedIn])
 
-
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(createTaskTC(todolistId, title))
     }, [dispatch])
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
-        dispatch(changeFilterAC(value, todolistId))
+        dispatch(changeFilterAC({value, todolistId}))
     }, [dispatch])
     const removeTodolist = useCallback((todolistId: string) => {
         dispatch(deleteTodolistThunkTC(todolistId))
