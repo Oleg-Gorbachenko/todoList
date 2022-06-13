@@ -8,7 +8,7 @@ export const handleServerNetworkError = (dispatch: Dispatch, message: string) =>
 }
 
 export const handleServerAppError = <T>(dispatch: Dispatch, data: ResponseType<T>) => {
-    if (data.messages.length) {
+    if (data.messages) {
         dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {
         dispatch(setAppErrorAC({error: 'some error occurred'}))

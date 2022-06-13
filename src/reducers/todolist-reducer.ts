@@ -2,7 +2,7 @@ import {todolistsAPI, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import {AxiosError} from "axios";
-import {handleServerNetworkError} from "../utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -62,6 +62,10 @@ export const fetchTodolistsTC = () => {
             .then((res) => {
                 dispatch(setAppStatusAC({status: 'succeeded'}))
                 dispatch(setTodosAC({todos: res.data}))
+            })
+            .catch((err) => {
+                dispatch(setAppStatusAC({status: 'idle'}))
+                handleServerAppError(dispatch, err)
             })
     }
 }

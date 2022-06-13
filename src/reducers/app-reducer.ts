@@ -43,6 +43,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         }
     })
         .catch((error) => {
+            dispatch(setAppStatusAC({status: 'idle'}))
             handleServerAppError(dispatch, error)
         })
         .finally(() => {
